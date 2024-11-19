@@ -52,7 +52,12 @@ button {
   cursor: pointer;
 }
 
+.modal-actions button:last-child {
+  background-color: #4CAF50;
+  color: white;
+}
+
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-} 
+}
