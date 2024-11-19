@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    expose:
+      - "27017"
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+    networks:
+      - jokes-network
+
+  server:
+    build:
+      context: ./jokes-server
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"
+    expose:
+      - "3005"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_USER=root
+      - MONGODB_PASSWORD=example
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+    depends_on:
+      - mongodb
+    networks:
+      - jokes-network
+
+  jokes-react:
+    build:
+      context: ./jokes-react
+      dockerfile: Dockerfile
+    expose:
+      - "80"
+    depends_on:
+      - server
+    networks:
+      - jokes-network
+
+  jokes-vue:
+    build:
+      context: ./jokes-vue
+      dockerfile: Dockerfile
+    expose:
+      - "80"
+    depends_on:
+      - server
+    networks:
+      - jokes-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - jokes-react
+      - jokes-vue
+      - server
+      - mongodb
+    networks:
+      - jokes-network
+
+networks:
+  jokes-network:
+    driver: bridge 
