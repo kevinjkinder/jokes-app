@@ -55,6 +55,10 @@ cd jokes-app
 docker-compose up --build
 ```
 
+Once the services are up, you can access them on:
+  - **React FE** http://localhost:8080/jokes-react
+  - **Vue FE** http://localhost:8080/jokes-vue
+
 ### 3. Stop the services:
 ```bash
 docker-compose down
