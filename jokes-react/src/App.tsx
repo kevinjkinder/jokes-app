@@ -11,20 +11,19 @@ function App() {
   const [totalPages, setTotalPages] = useState(1)
   const [showAddModal, setShowAddModal] = useState(false)
 
-  const loadJokes = async () => {
-    const { jokes: _jokes, totalPages: _totalPages } = await jokeService.getJokes(currentPage, 20)
+  const loadJokes = async (page: number) => {
+    const { jokes: _jokes, totalPages: _totalPages } = await jokeService.getJokes(page, 20)
     setJokes(_jokes)
     setTotalPages(_totalPages)
   }
 
-  const handlePageChange = async (page: number) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page)
-    await loadJokes()
   }
 
   const handleJokeDeleted = (id: number) => {
     setJokes(jokes => jokes.filter(joke => joke._id !== id))
-    loadJokes()
+    loadJokes(currentPage)
   }
 
   const handleJokeRated = (updatedJoke: Joke) => {
@@ -34,11 +33,11 @@ function App() {
   }
 
   const handleJokeAdded = () => {
-    loadJokes()
+    loadJokes(currentPage)
   }
 
   useEffect(() => {
-    loadJokes()
+    loadJokes(currentPage)
   }, [currentPage])
 
   return (
