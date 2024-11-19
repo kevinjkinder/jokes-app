@@ -82,9 +82,6 @@ button {
   font-size: 1.2rem;
 }
 
-button:hover:not(:disabled) {
-  background: #f0f0f0;
-}
 
 button:disabled {
   opacity: 0.5;
