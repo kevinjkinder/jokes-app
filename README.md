@@ -46,8 +46,8 @@ To get everything running on your local machine, follow these steps:
 
 ### 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/jokes-challenge.git
-cd jokes-challenge
+git clone https://github.com/kevinjkinder/jokes-app
+cd jokes-app
 ```
 
 ### 2. Build and start the services:
